@@ -1,0 +1,27 @@
+<div class="fixed top-0 h-14 bg-gray-200 w-full">
+  <div class="max-w-5xl w-full mx-auto h-full flex items-center justify-between px-8">
+    <%= link_to "Home", "/", class: "text-xl" %>
+  
+    <div class="flex items-center h-full">
+      <% if current_user %>
+        <% if stream = current_user.streams.where(live: true).first %>
+          <div class="relative">
+            <%= link_to "Live Now", dashboard_stream_path(stream), class: "p-2 rounded-lg bg-gray-300 text-gray-900" %>
+            <span class="w-3 h-3 bg-red-500 rounded-lg absolute -right-1 -top-2 animate-pulse"> </span>
+          </div>
+        <% else %>
+          <%= link_to "New Stream", new_stream_path, class: "p-2 rounded-lg bg-gray-300 text-gray-900" %>
+        <% end %>
+        <div class="relative ml-4" data-controller="dropdown" data-action="click@window->dropdown#closeUnlessMenu">
+          <span class="text-xl cursor-pointer" data-action="click->dropdown#toggle"> <%= current_user.username %> </span>
+          <div class="absolute top-8 w-40 h-40 bg-gray-100 rounded-lg p-2 hidden flex flex-col items-center" data-dropdown-target="menu"> 
+            <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %>
+          </div>
+        </div>
+      <% else %>
+        <%= link_to "Sign in", new_user_session_path, class: "text-xl" %>
+        <%= link_to "Create account", new_user_registration_path, class: "ml-4 p-2 rounded-lg bg-gray-300 text-gray-900" %>
+      <% end %>
+    </div>
+  </div>
+</div>

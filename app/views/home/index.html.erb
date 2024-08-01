@@ -1,0 +1,15 @@
+<div class="w-full min-h-screen flex flex-col items-center pt-36">
+  <h1 class="font-bold text-5xl md:text-7xl font-future bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500 text-center">Twitch-Rails</h1>
+  <p>Live streaming made simple with Rails </p>
+
+  <div class="w-full grid grid-cols-4 gap-4 max-w-5xl mx-auto">
+    <% Stream.where(live: true).each do |stream| %>
+      <%= link_to stream do %>
+        <div class="h-40 w-full bg-gray-100 rounded-lg flex flex-col items-center justify-center"> 
+          <span class="text-xl"> <%= stream.name %> </span>
+          <%= stream.user.username %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
